@@ -4,6 +4,7 @@ include_once "vendor/autoload.php";
 
 use Phroute\Phroute\Exception\HttpRouteNotFoundException;
 use Phroute\Phroute\RouteCollector;
+use App\Controller\EmpresaController;
 
 
 $router = new RouteCollector();
@@ -26,16 +27,16 @@ $router->get('/login',function (){
 //Definición de rutas
 //Rutas para la clase usuario
 //Vistas de la aplicacion
-$router->get('/user/create',[UserController::class,'create']);
-$router->post('/user/login',[UserController::class,'verify']);
+$router->get('/empresa/create',[EmpresaController::class,'create']);
+$router->post('/empresa',[EmpresaController::class,'store']);
+$router->put('/empresa/{id}',[EmpresaController::class,'update']);
+
 $router->get('/user/logout',[UserController::class,'logout'],["before"=>'auth']);
 $router->get('/user/{id}/edit',[UserController::class,'edit'],["before"=>'auth']);
 
 
 $router->get('/user',[UserController::class,'index'],["before"=>'admin']);
 $router->get('/user/{id}',[UserController::class,'show']);
-$router->post('/user',[UserController::class,'store']);
-$router->put('/user/{id}',[UserController::class,'update']);
 $router->delete('/user/{id}',[UserController::class,'destroy']);
 
 
