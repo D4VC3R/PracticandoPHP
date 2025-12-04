@@ -5,6 +5,7 @@ include_once "vendor/autoload.php";
 use Phroute\Phroute\Exception\HttpRouteNotFoundException;
 use Phroute\Phroute\RouteCollector;
 use App\Controller\EmpresaController;
+use App\Controller\InversorController;
 
 
 $router = new RouteCollector();
@@ -24,36 +25,21 @@ $router->get('/login',function (){
     include_once DIRECTORIO_VISTAS_FRONTEND."login.php";
 });
 
-//Definición de rutas
-//Rutas para la clase usuario
-//Vistas de la aplicacion
+// Rutas del CRUD de Empresa.
 $router->get('/empresa/create',[EmpresaController::class,'create']);
 $router->post('/empresa',[EmpresaController::class,'store']);
 $router->put('/empresa/{id}',[EmpresaController::class,'update']);
 $router->delete('/empresa/{id}',[EmpresaController::class,'destroy']);
+$router->get('/empresa',[EmpresaController::class,'index']);
+$router->get('/empresa/{id}',[EmpresaController::class,'show']);
 
-$router->get('/user/logout',[UserController::class,'logout']);
-$router->get('/user/{id}/edit',[UserController::class,'edit']);
-
-
-$router->get('/user',[UserController::class,'index'],["before"=>'admin']);
-$router->get('/user/{id}',[UserController::class,'show']);
-
-
-$router->get('/api/user',[UserController::class,'index']);
-$router->get('/api/user/{id}',[UserController::class,'show']);
-$router->post('/api/user',[UserController::class,'store']);
-$router->put('/api/user/{id}',[UserController::class,'update']);
-$router->delete('/api/user/{id}',[UserController::class,'destroy']);
-
-
-$router->get('/director',[DirectorController::class,'index']);
-$router->get('/director/{id}',[DirectorController::class,'show']);
-$router->post('/director',[DirectorController::class,'store']);
-$router->put('/director/{id}',[DirectorController::class,'update']);
-$router->delete('/director/{id}',[DirectorController::class,'destroy']);
-
-$router->get('/create-director',[DirectorController::class,'create']);
+// Rutas del CRUD de Inversor.
+$router->get('/inversor/create',[InversorController::class,'create']);
+$router->post('/inversor',[InversorController::class,'store']);
+$router->put('/inversor/{email}',[InversorController::class,'update']);
+$router->delete('/inversor/{email}',[InversorController::class,'destroy']);
+$router->get('/inversor',[InversorController::class,'index']);
+$router->get('/inversor/{email}',[InversorController::class,'show']);
 
 
 
@@ -69,79 +55,6 @@ $router->get('/create-director',[DirectorController::class,'create']);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Ejemplos de definición de rutas
-/*$router->any('/', function(){
-
-    return 'Página principal';
-});
-
-$router->get('/administracion',function(){
-    include_once DIRECTORIO_VISTAS_ADMINISTRACION . "welcome.php";
-});
-
-$router->get('/admin-peliculas',function(){
-    include_once DIRECTORIO_VISTAS_ADMINISTRACION . "usuarios.php";
-});
-
-$router->delete('/pelicula/{id:\d+}',function($id){
-    echo "Se borraria la pelicula $id";
-});
-
-
-$router->get('/ejemplofuncion',function(){
-
-    var_dump($_GET);
-    if (isset($_GET['dni'])){
-        $dniParametro = $_GET['dni'];
-        echo $dniParametro;
-
-        echo letraDNI($dniParametro);
-    }else{
-        echo "Parametro recibido de forma incorrecta";
-    }
-});
-
-$router->get('/calcular-letra-dni',function(){
-
-    $resultado = "";
-    $dni=$_GET['dni'];
-    $letra="";
-    if (isset($_GET['dni'])){
-        $resultado = "La letra correspondiente al DNI:" . $_GET['dni'] . " es: ";
-        $resultado .= letraDNI($_GET['dni']);
-        $letra=letraDNI($_GET['dni']);
-
-    }else{
-        $resultado = "No se ha podido calcular la letra del DNI. 
-        Nombre de parámetro incorrecto";
-    }
-    include_once DIRECTORIO_VISTAS_ADMINISTRACION."letradni.php";
-
-});
-
-*/
 
 //Resolución de rutas
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());

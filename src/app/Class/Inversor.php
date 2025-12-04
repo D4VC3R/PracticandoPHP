@@ -3,12 +3,12 @@
 namespace App\Class;
 
 use DateTime;
+use JsonSerializable;
 
 
 
 
-
-class Inversor
+class Inversor implements JsonSerializable
 {
   private string $email;
   private string $nombre;
@@ -28,6 +28,7 @@ class Inversor
     $this->dni = $dni;
     $this->fecha_nac = $fecha_nac;
   }
+
 
   public function getEmail(): string
   {
@@ -74,5 +75,56 @@ class Inversor
   }
 
 
+	public function jsonSerialize():mixed
+	{
+		return [
+			"Email" => $this->getEmail(),
+			"Nombre" => $this->getNombre(),
+			"DNI" => $this->getDni(),
+			"Fecha Nacimiento" => $this->getFechaNac()->format('d-m-Y')
+		];
+	}
 
+	public static function createFromArray(array $data):?Inversor{
+
+		$valido = true;
+
+		if (!isset($data['nombre']) || !is_string($data['nombre'])) $valido = false;
+		if (!isset($data['email']) || !is_string($data['email'])) $valido = false;
+		if (!isset($data['fecha_nac']) || !DateTime::createFromFormat('Y-m-d', $data['fecha_nac'])) $valido = false;
+		if (!isset($data['dni']) || !is_string($data['dni'])) $valido = false;
+
+		if ($valido){
+			return new Inversor($data['email'], $data['nombre'], $data['dni'], DateTime::createFromFormat('Y-m-d', $data['fecha_nac']));
+		} else {
+			return null;
+		}
+
+
+
+
+	}
+
+	public static function editFromArray(array $data, Inversor $inversor):?Inversor{
+		$editado = false;
+
+		if (isset($data['nombre']) && is_string($data['nombre'])){
+			$inversor->setNombre($data['nombre']);
+			$editado = true;
+		}
+		if (isset($data['fecha_nac']) && DateTime::createFromFormat('Y-m-d',$data['fecha_nac'])){
+			$inversor->setFechaNac(DateTime::createFromFormat('Y-m-d', $data['fecha_nac']));
+			$editado = true;
+		}
+		if (isset($data['dni']) && is_string($data['dni'])){
+			$inversor->setDni($data['dni']);
+			$editado = true;
+		}
+
+		if ($editado){
+			return $inversor;
+		} else {
+			return null;
+		}
+	}
 }
