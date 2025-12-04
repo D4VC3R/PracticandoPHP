@@ -59,9 +59,9 @@ class Empresa implements JsonSerializable
 	public function jsonSerialize(): array
 	{
 		return [
-			"id"=>$this->id,
-			"nombre"=>$this->nombre,
-			"rentabilidad"=>$this->rentabilidad
+			"ID: "=>$this->id,
+			"Empresa: "=>$this->nombre,
+			"Rentabilidad: "=>$this->rentabilidad
 		];
 	}
 

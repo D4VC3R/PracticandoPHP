@@ -17,7 +17,8 @@ class EmpresaController implements ControllerInterface
 
   function show($id)
   {
-    // TODO: Implement show() method.
+    $empresa = EmpresaModel::getEmpresaById($id);
+		return json_encode($empresa);
   }
 
   function create()
@@ -52,7 +53,7 @@ class EmpresaController implements ControllerInterface
 
   function edit($id)
   {
-    $empresa = EmpresaModel::getEmpresaById($id);
+    //obtener la empresa -> include_once al formulario de editar
 
   }
 
