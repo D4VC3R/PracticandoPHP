@@ -91,6 +91,20 @@ class EmpresaController implements ControllerInterface
 
   function destroy($id)
   {
-    // TODO: Implement destroy() method.
+		if (EmpresaModel::deleteEmpresaById($id)){
+			http_response_code(200);
+			return json_encode([
+				"error" => false,
+				"message" => "Empresa borrada con éxito",
+				"code" => 200
+			]);
+		} else {
+			http_response_code(400);
+			return json_encode([
+				"error" => true,
+				"message" => "No se pudo borrar la empresa.",
+				"code" => 400
+			]);
+		}
   }
 }

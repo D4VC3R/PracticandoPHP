@@ -86,7 +86,7 @@ class Empresa implements JsonSerializable
 			$datosAnteriores->setRentabilidad($data['rentabilidad']);
 			$editado = true;
 		}
-		if ($editado === true){
+		if ($editado){
 			return $datosAnteriores;
 		}else{
 			return null;

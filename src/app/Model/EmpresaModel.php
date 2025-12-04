@@ -126,4 +126,25 @@ class EmpresaModel
 			return false;
 		}
 	}
+
+	public static function deleteEmpresaById(string $id): bool{
+		try {
+			$conexion = new PDO("mysql:host=mariadb;dbname=examen","alumno","alumno");
+			$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		}catch (PDOException $e){
+			return false;
+		}
+
+		$sql = "DELETE FROM empresa WHERE id=:id";
+
+		$stmt = $conexion->prepare($sql);
+		$stmt->bindValue("id", $id);
+		$stmt->execute();
+
+		if ($stmt->rowCount()>0){
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

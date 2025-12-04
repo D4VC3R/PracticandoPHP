@@ -30,14 +30,14 @@ $router->get('/login',function (){
 $router->get('/empresa/create',[EmpresaController::class,'create']);
 $router->post('/empresa',[EmpresaController::class,'store']);
 $router->put('/empresa/{id}',[EmpresaController::class,'update']);
+$router->delete('/empresa/{id}',[EmpresaController::class,'destroy']);
 
-$router->get('/user/logout',[UserController::class,'logout'],["before"=>'auth']);
-$router->get('/user/{id}/edit',[UserController::class,'edit'],["before"=>'auth']);
+$router->get('/user/logout',[UserController::class,'logout']);
+$router->get('/user/{id}/edit',[UserController::class,'edit']);
 
 
 $router->get('/user',[UserController::class,'index'],["before"=>'admin']);
 $router->get('/user/{id}',[UserController::class,'show']);
-$router->delete('/user/{id}',[UserController::class,'destroy']);
 
 
 $router->get('/api/user',[UserController::class,'index']);
