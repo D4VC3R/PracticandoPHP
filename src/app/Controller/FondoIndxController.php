@@ -32,7 +32,7 @@ class FondoIndxController implements ControllerInterface
     // TODO: Implement edit() method.
   }
 
-  function update()
+  function update($id)
   {
     // TODO: Implement update() method.
   }
